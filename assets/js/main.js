@@ -25,14 +25,26 @@
 	// Disable animations/transitions until everything's loaded.
 	$body.classList.add('is-loading');
 
+
 	window.addEventListener('load', function () {
 		window.setTimeout(function () {
 			$body.classList.remove('is-loading');
 		}, 100);
 	});
 
+			var texts = [];
+				//Db Ref
+			var dbRef = firebase.database().ref().child("firstBday");
+
+			
+			dbRef.on('value', function (snapshot) {
+				texts =Object.keys(snapshot.val()).map(function (key) {return snapshot.val()[key]});
+			});
+
 	// Slideshow Background.
 	(function () {
+
+			
 
 		// Settings.
 		var settings = {
@@ -55,9 +67,7 @@
 		var pos = 0, lastPos = 0,
 			$wrapper, $bgs = [], $bg,
 			k, v;
-		var texts = ['Happy Birthday Aryahi --Sesha',
-			'Many Happy returns of the day Aryahi --Payal',
-			'Aryahi Happy Birthday  --Rakesh'];
+		
 
 
 
@@ -89,7 +99,7 @@
 			return;
 
 		window.setInterval(function () {
-			document.getElementById("p1").innerHTML = texts[Math.floor(Math.random() * 3)];
+			document.getElementById("p1").innerHTML = texts[Math.floor(Math.random() * texts.length)];
 
 			lastPos = pos;
 			pos++;
@@ -156,9 +166,10 @@
 
 			var curentWish = document.getElementById('p1');
 			curentWish.innerText = messageWish;
-			var dbRef = firebase.database().ref();
-			var postsRef = dbRef.child("firstBday");
-			postsRef.push().set(messageWish);
+			
+			
+			dbRef.push(messageWish);
+			
 
 			event.stopPropagation();
 			event.preventDefault();
