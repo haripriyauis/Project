@@ -4,171 +4,191 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-(function() {
+(function () {
 
 	"use strict";
 
 	// Methods/polyfills.
 
-		// classList | (c) @remy | github.com/remy/polyfills | rem.mit-license.org
-			!function(){function t(t){this.el=t;for(var n=t.className.replace(/^\s+|\s+$/g,"").split(/\s+/),i=0;i<n.length;i++)e.call(this,n[i])}function n(t,n,i){Object.defineProperty?Object.defineProperty(t,n,{get:i}):t.__defineGetter__(n,i)}if(!("undefined"==typeof window.Element||"classList"in document.documentElement)){var i=Array.prototype,e=i.push,s=i.splice,o=i.join;t.prototype={add:function(t){this.contains(t)||(e.call(this,t),this.el.className=this.toString())},contains:function(t){return-1!=this.el.className.indexOf(t)},item:function(t){return this[t]||null},remove:function(t){if(this.contains(t)){for(var n=0;n<this.length&&this[n]!=t;n++);s.call(this,n,1),this.el.className=this.toString()}},toString:function(){return o.call(this," ")},toggle:function(t){return this.contains(t)?this.remove(t):this.add(t),this.contains(t)}},window.DOMTokenList=t,n(Element.prototype,"classList",function(){return new t(this)})}}();
+	// classList | (c) @remy | github.com/remy/polyfills | rem.mit-license.org
+	!function () { function t(t) { this.el = t; for (var n = t.className.replace(/^\s+|\s+$/g, "").split(/\s+/), i = 0; i < n.length; i++)e.call(this, n[i]) } function n(t, n, i) { Object.defineProperty ? Object.defineProperty(t, n, { get: i }) : t.__defineGetter__(n, i) } if (!("undefined" == typeof window.Element || "classList" in document.documentElement)) { var i = Array.prototype, e = i.push, s = i.splice, o = i.join; t.prototype = { add: function (t) { this.contains(t) || (e.call(this, t), this.el.className = this.toString()) }, contains: function (t) { return -1 != this.el.className.indexOf(t) }, item: function (t) { return this[t] || null }, remove: function (t) { if (this.contains(t)) { for (var n = 0; n < this.length && this[n] != t; n++); s.call(this, n, 1), this.el.className = this.toString() } }, toString: function () { return o.call(this, " ") }, toggle: function (t) { return this.contains(t) ? this.remove(t) : this.add(t), this.contains(t) } }, window.DOMTokenList = t, n(Element.prototype, "classList", function () { return new t(this) }) } } ();
 
-		// canUse
-			window.canUse=function(p){if(!window._canUse)window._canUse=document.createElement("div");var e=window._canUse.style,up=p.charAt(0).toUpperCase()+p.slice(1);return p in e||"Moz"+up in e||"Webkit"+up in e||"O"+up in e||"ms"+up in e};
+	// canUse
+	window.canUse = function (p) { if (!window._canUse) window._canUse = document.createElement("div"); var e = window._canUse.style, up = p.charAt(0).toUpperCase() + p.slice(1); return p in e || "Moz" + up in e || "Webkit" + up in e || "O" + up in e || "ms" + up in e };
 
-		// window.addEventListener
-			(function(){if("addEventListener"in window)return;window.addEventListener=function(type,f){window.attachEvent("on"+type,f)}})();
+	// window.addEventListener
+	(function () { if ("addEventListener" in window) return; window.addEventListener = function (type, f) { window.attachEvent("on" + type, f) } })();
 
 	// Vars.
-		var	$body = document.querySelector('body');
+	var $body = document.querySelector('body');
 
 	// Disable animations/transitions until everything's loaded.
-		$body.classList.add('is-loading');
+	$body.classList.add('is-loading');
 
-		window.addEventListener('load', function() {
-			window.setTimeout(function() {
-				$body.classList.remove('is-loading');
-			}, 100);
-		});
+	window.addEventListener('load', function () {
+		window.setTimeout(function () {
+			$body.classList.remove('is-loading');
+		}, 100);
+	});
 
 	// Slideshow Background.
-		(function() {
+	(function () {
 
-			// Settings.
-				var settings = {
+		// Settings.
+		var settings = {
 
-					// Images (in the format of 'url': 'alignment').
-						images: {
-							'images/bg01.jpg': 'center',
-							'images/bg02.jpg': 'center',
-							'images/bg03.jpg': 'center'
-						},
+			// Images (in the format of 'url': 'alignment').
+			images: {
+				'images/bg01.jpg': 'center',
+				'images/bg02.jpg': 'center',
+				'images/bg03.jpg': 'center'
 
-					// Delay.
-						delay: 6000
 
-				};
+			},
 
-			// Vars.
-				var	pos = 0, lastPos = 0,
-					$wrapper, $bgs = [], $bg,
-					k, v;
+			// Delay.
+			delay: 6000
 
-			// Create BG wrapper, BGs.
-				$wrapper = document.createElement('div');
-					$wrapper.id = 'bg';
-					$body.appendChild($wrapper);
+		};
 
-				for (k in settings.images) {
+		// Vars.
+		var pos = 0, lastPos = 0,
+			$wrapper, $bgs = [], $bg,
+			k, v;
+		var texts = ['Happy Birthday Aryahi --Sesha',
+			'Many Happy returns of the day Aryahi --Payal',
+			'Aryahi Happy Birthday  --Rakesh'];
 
-					// Create BG.
-						$bg = document.createElement('div');
-							$bg.style.backgroundImage = 'url("' + k + '")';
-							$bg.style.backgroundPosition = settings.images[k];
-							$wrapper.appendChild($bg);
 
-					// Add it to array.
-						$bgs.push($bg);
 
-				}
+		// Create BG wrapper, BGs.
+		$wrapper = document.createElement('div');
+		$wrapper.id = 'bg';
+		$body.appendChild($wrapper);
 
-			// Main loop.
-				$bgs[pos].classList.add('visible');
-				$bgs[pos].classList.add('top');
+		for (k in settings.images) {
 
-				// Bail if we only have a single BG or the client doesn't support transitions.
-					if ($bgs.length == 1
-					||	!canUse('transition'))
-						return;
+			// Create BG.
+			$bg = document.createElement('div');
+			$bg.style.backgroundImage = 'url("' + k + '")';
+			$bg.style.backgroundPosition = settings.images[k];
+			$wrapper.appendChild($bg);
 
-				window.setInterval(function() {
+			// Add it to array.
+			$bgs.push($bg);
 
-					lastPos = pos;
-					pos++;
+		}
 
-					// Wrap to beginning if necessary.
-						if (pos >= $bgs.length)
-							pos = 0;
+		// Main loop.
+		$bgs[pos].classList.add('visible');
+		$bgs[pos].classList.add('top');
 
-					// Swap top images.
-						$bgs[lastPos].classList.remove('top');
-						$bgs[pos].classList.add('visible');
-						$bgs[pos].classList.add('top');
+		// Bail if we only have a single BG or the client doesn't support transitions.
+		if ($bgs.length == 1
+			|| !canUse('transition'))
+			return;
 
-					// Hide last image after a short delay.
-						window.setTimeout(function() {
-							$bgs[lastPos].classList.remove('visible');
-						}, settings.delay / 2);
+		window.setInterval(function () {
+			document.getElementById("p1").innerHTML = texts[Math.floor(Math.random() * 3)];
 
-				}, settings.delay);
+			lastPos = pos;
+			pos++;
 
-		})();
+			// Wrap to beginning if necessary.
+			if (pos >= $bgs.length)
+				pos = 0;
+
+			// Swap top images.
+			$bgs[lastPos].classList.remove('top');
+			$bgs[pos].classList.add('visible');
+			$bgs[pos].classList.add('top');
+
+			// Hide last image after a short delay.
+			window.setTimeout(function () {
+				$bgs[lastPos].classList.remove('visible');
+			}, settings.delay / 2);
+
+		}, settings.delay);
+
+	})();
 
 	// Signup Form.
-		(function() {
+	(function () {
 
-			// Vars.
-				var $form = document.querySelectorAll('#signup-form')[0],
-					$submit = document.querySelectorAll('#signup-form input[type="submit"]')[0],
-					$message;
+		// Vars.
+		var $form = document.querySelectorAll('#signup-form')[0],
+			$submit = document.querySelectorAll('#signup-form input[type="submit"]')[0],
+			$message;
 
-			// Bail if addEventListener isn't supported.
-				if (!('addEventListener' in $form))
-					return;
 
-			// Message.
-				$message = document.createElement('span');
-					$message.classList.add('message');
-					$form.appendChild($message);
+		// Bail if addEventListener isn't supported.
+		if (!('addEventListener' in $form))
+			return;
 
-				$message._show = function(type, text) {
+		// Message.
+		$message = document.createElement('span');
+		$message.classList.add('message');
+		$form.appendChild($message);
 
-					$message.innerHTML = text;
-					$message.classList.add(type);
-					$message.classList.add('visible');
+		$message._show = function (type, text) {
 
-					window.setTimeout(function() {
-						$message._hide();
-					}, 3000);
+			$message.innerHTML = text;
+			$message.classList.add(type);
+			$message.classList.add('visible');
 
-				};
+			window.setTimeout(function () {
+				$message._hide();
+			}, 3000);
 
-				$message._hide = function() {
-					$message.classList.remove('visible');
-				};
+		};
 
-			// Events.
-			// Note: If you're *not* using AJAX, get rid of this event listener.
-				$form.addEventListener('submit', function(event) {
+		$message._hide = function () {
+			$message.classList.remove('visible');
+		};
 
-					event.stopPropagation();
-					event.preventDefault();
+		// Events.
+		// Note: If you're *not* using AJAX, get rid of this event listener.
+		$form.addEventListener('submit', function (event) {
 
-					// Hide message.
-						$message._hide();
 
-					// Disable submit.
-						$submit.disabled = true;
+			///get Message and save in dbRef 
+			var messageWish = document.getElementById("wishMessage").value;
 
-					// Process form.
-					// Note: Doesn't actually do anything yet (other than report back with a "thank you"),
-					// but there's enough here to piece together a working AJAX submission call that does.
-						window.setTimeout(function() {
+			var curentWish = document.getElementById('p1');
+			curentWish.innerText = messageWish;
+			var dbRef = firebase.database().ref();
+			var postsRef = dbRef.child("firstBday");
+			postsRef.push().set(messageWish);
 
-							// Reset form.
-								$form.reset();
+			event.stopPropagation();
+			event.preventDefault();
 
-							// Enable submit.
-								$submit.disabled = false;
+			// Hide message.
+			$message._hide();
 
-							// Show message.
-								$message._show('success', 'Thank you!');
-								//$message._show('failure', 'Something went wrong. Please try again.');
+			// Disable submit.
+			$submit.disabled = true;
 
-						}, 750);
+			// Process form.
+			// Note: Doesn't actually do anything yet (other than report back with a "thank you"),
+			// but there's enough here to piece together a working AJAX submission call that does.
+			window.setTimeout(function () {
 
-				});
 
-		})();
+				// Reset form.
+				$form.reset();
+
+				// Enable submit.
+				$submit.disabled = false;
+
+				// Show message.
+				$message._show('success', 'Thank you!');
+				//$message._show('failure', 'Something went wrong. Please try again.');
+
+			}, 750);
+
+		});
+
+	})();
 
 })();
