@@ -170,13 +170,14 @@
 			///get Message and save in dbRef 
 			var messageWish = document.getElementById("wishMessage").value;
 
-			var curentWish = document.getElementById('p1');
-			curentWish.innerText = messageWish;
 			
 			
-			dbRef.push(messageWish);
-			
-
+			if(messageWish){
+				var curentWish = document.getElementById('p1');
+				curentWish.innerText = messageWish;
+				dbRef.push(messageWish);
+			}
+		
 			event.stopPropagation();
 			event.preventDefault();
 
