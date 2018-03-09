@@ -209,4 +209,85 @@
 
 	})();
 
+// Signup Form1.
+(function () {
+
+	// Vars.
+	var $forms = document.querySelectorAll('#signup-form1')[0],
+		$submits = document.querySelectorAll('#signup-form1 input[type="submit1"]')[0],
+		$messages;
+
+
+	// Bail if addEventListener isn't supported.
+	if (!('addEventListener' in $forms))
+		return;
+
+	// Message.
+	$messages = document.createElement('span');
+	$messages.classList.add('message');
+	$forms.appendChild($messages);
+
+	$messages._show = function (type, text) {
+
+		$messages.innerHTML = text;
+		$messages.classList.add(type);
+		$messages.classList.add('visible');
+
+		window.setTimeout(function () {
+			$messages._hide();
+		}, 3000);
+
+	};
+
+	$messages._hide = function () {
+		$messages.classList.remove('visible');
+	};
+
+	// Events.
+	// Note: If you're *not* using AJAX, get rid of this event listener.
+	$forms.addEventListener('submit1', function (event) {
+
+
+		///get Message and save in dbRef 
+		var messageWish1 = document.getElementById("wishMessage1").value;
+
+		
+		
+		if(messageWish1){
+			var curentWish1 = document.getElementById('p1');
+			curentWish1.innerText = messageWish1;
+			dbRef.push(messageWish1);
+		}
+	
+		event.stopPropagation();
+		event.preventDefault();
+
+		// Hide message.
+		$message1._hide();
+
+		// Disable submit.
+		$submits.disabled = true;
+
+		// Process form.
+		// Note: Doesn't actually do anything yet (other than report back with a "thank you"),
+		// but there's enough here to piece together a working AJAX submission call that does.
+		window.setTimeout(function () {
+
+
+			// Reset form.
+			$forms.reset();
+
+			// Enable submit.
+			$submits.disabled = false;
+
+			// Show message.
+			$messages._show('success', 'Thank you!');
+			//$message._show('failure', 'Something went wrong. Please try again.');
+
+		}, 750);
+
+	});
+
+})();
+
 })();
